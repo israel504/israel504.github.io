@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href='https://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
+	<meta charset="utf-8">
+	<title>Bouncing Box</title>
+	<script src="jquery.min.js"></script>
+
+	<!-- BEGIN CSS -->
+	<style>
+		/* TODO 1 */
+		body {
+			font-family: 'VT323', monospace ;
+			cursor: url('./img/ring_cursor.ico'), default;
+			background-image: url("img/sonic.png");
+			background-repeat: repeat-x;
+		}
+		.box {
+			display: block;
+			position: absolute;
+			width: 70px;
+			height: 70px;
+			top: 100px;
+			left:0px;
+			background-color: teal;
+			font-size: 600%;
+			text-align: center;
+		}
+		
+		#sonic { 
+			top:485px;
+			display: block;
+			position: absolute;
+			left:50px;
+		}
+		.hud {
+			font-size: 600%;
+		}
+	</style>
+
+</head>
+<body class="board">
+	<!-- HTML for the box -->
+	<!--<div class="box">?</div>-->
+	<div id='sonic'>
+		<img src="img/supersonic.gif"></img>	
+		
+	</div>
+	
+	<div class = "hud">Rings
+		<div id = "points">
+			1
+		</div>
+	</div>
+	<!-- BEGIN JAVASCRIPT -->
+	<script>
+	
+		/*
+		TODO change box to sonic
+		change to super sonic after 30 pts
+		*/
+		
+		(function(){
+			'use strict'
+
+			// Variable declarations
+			var sonic;
+			var boardWidth;
+			var update;
+			var handleSonicClick;
+			
+			var ringSound = new Audio('sound/ringsound.mp3');
+			// jQuery stuff setup for you
+			sonic = $('#sonic');
+			boardWidth = $('.board').width();
+			
+			// TODO 2
+			var position;
+			var points;
+			var speed;
+			
+			position = 0;
+			points = 0;
+			speed = 15;
+			
+			
+			
+			// TODO 3 / 4
+			update = function() {
+				position = position + speed; 
+				console.log(boardWidth)
+				if (position>boardWidth) {
+					position= 0;
+				}
+				sonic.css('left',position);
+			};
+
+
+			// TODO 5 / 6
+			handleSonicClick = function() {
+				//reset sonic position
+				position = 0;
+				//increase speed
+				speed = speed + 5;
+				points= points+ 1;
+				console.log(speed)
+				$("#points").text(points);
+				ringSound.play();
+				//
+			};
+
+
+			//this calls update every 50 milliseconds
+			setInterval(update, 50);
+			// this calls the handle handleSonicClick function every time the sonic is clicked on
+			sonic.on('click', handleSonicClick);
+		})()
+	</script>
+</body>
+</html>
